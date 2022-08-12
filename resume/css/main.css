@@ -1,0 +1,601 @@
+Skip to content
+DEV Community
+
+Log in
+Create account
+
+
+2
+Like
+
+
+1
+Unicorn
+
+
+3
+Save
+
+Dennis Ivy
+Dennis Ivy
+Posted on Aug 10
+Build A Digital Resume & Host For Free
+#
+webdev
+Let's turn your resume into a digital resume ready to be shared with the world!
+
+What we will do in this tutorial is review my personal resume and turn it onto an HTML file with styling and host it with Guthub pages for free. See live demo here.
+
+What you should put on your resume
+
+If you want to learn more about the type of content that should go on your resume and how hiring managers think as they review them, then read "Developer Resumes — How Managers Actually Read Them".
+
+Let start building
+I will use this guide in the video version of this tutorial and highly recommend you watch that video here as you read this guide.
+
+See complete source code
+
+Create Folders & Files
+
+I'll start this project by creating a blank folder on my desktop and adding the following files and folders:
+
+digital_resume
+│   index.html    
+└───assets
+│   │   resume.pdf
+│   │   
+│   │
+│   └───images
+│       │ 
+│       └─profile_pic.jpg
+│       
+│   
+└───styles
+    │  
+    └─style.css
+
+HTML Setup
+
+Let's get some boiler plate HTML setup and build out everything up until the qualifications list. Make sure to link up all the
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Dennis Ivy</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./styles/main.css">
+    </head>
+    <body>
+        <div id="container--main">
+
+            <section id="wrapper--hero" class="section--page">
+                <img id="profile-pic" src="./assets/images/profile_pic.JPG">
+
+                <div>
+                    <h1 id="user-name">Dennis Ivanov</h1>
+                    <p id="bio">Software developer, developer advocate at <a href="https://www.agora.io/en/" target="_blank">Agora</a>, Udemy <a href="https://www.udemy.com/user/dennis-ivanov-5/" target="_blank">instructor</a>, <a href="https://www.youtube.com/c/dennisivy" target="_blank">YouTuber</a> with 166k+ subs and contributor at <a href="https://youtu.be/PtQiiknWUcI?t=6" target="_blank">Traversy Media</a>.</p>
+                    <p id="email">👉 dennis@dennisivy.com</p>
+                </div>  
+            </section>
+
+            <section class="section--page">
+
+                <div id="socials--list">
+                    <a href="https://youtube.com/c/dennisivy" target="_blank">Youtube</a>
+                    <a href="https://twitter.com/dennisivy11" target="_blank">Twitter</a>
+                    <a href="https://www.linkedin.com/in/dennis-ivanov/" target="_blank">Linkedin</a>
+                    <a href="https://github.com/divanov11" target="_blank">Github</a>
+                    <a href="./assets/resume.pdf" target="_blank">Download Resume</a>
+                </div>
+            </section>
+
+            <section class="section--page">
+                <h2>Skills & Qualifications</h2>
+                <ul id="qualifications--list">
+                    <li>✔️ 7 Years experience with front & backend development</li>
+                    <li>✔️ Extensive knowledge in API & Database Design.</li>
+                    <li>✔️ Experienced content creator on YouTube & community leader </li>
+                    <li>✔️ 7 Years experience with running Adwords campaigns & SEO</li>
+                </ul>
+            </section>  
+        </div>
+
+    </body>
+</html>
+Styling what we have so far
+
+Before we add more content lets add in some styling and import a font type that I'd like to use here:
+
+@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&display=swap');
+
+:root{
+    --mainTextColor:#000;
+    --secondaryTextColor:(51 51 51);
+    --mainLinkColor:#0da2b8;
+    --mainBorderColor:rgb(218, 218, 218);
+    --mainBgColor:rgb(249, 250,251);
+}
+
+*{
+    font-family: 'Readex Pro';
+    line-height: 1.5em;
+    box-sizing: border-box;
+    color: var(--mainTextColor);
+
+}
+
+body{
+    background-color: var(--mainBgColor);            
+}
+
+p, span, li{
+    color: var(--secondaryTextColor);
+    font-size: 1em;
+}
+
+a{
+    text-decoration: none;
+    color: var(--mainLinkColor);
+    font-weight: 500;
+}
+
+li{
+    line-height: 1.9em;
+}
+
+#container--main{
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 1em;
+}
+
+.section--page{
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+#wrapper--hero{
+    display: flex;
+    align-items: center;
+    gap: 4em;
+}
+
+#bio, a{
+    font-weight: 300;
+}
+
+#user-name{
+    font-size: 48px;
+    line-height: 1em;
+}
+
+#profile-pic{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#email{
+    color: var(--mainTextColor);
+}
+
+#socials--list{
+    display: flex;
+    justify-content: space-between;
+    column-gap: 1em;
+    flex-wrap: wrap;
+}
+
+#socials--list a{
+    font-weight: 300;
+    color: var(--secondaryTextColor);
+    font-size: 0.9em;
+    transition: 0.3s;
+}
+
+#socials--list a:hover{
+    font-weight: 100;
+    color: var(--mainLinkColor);
+    font-size: 0.9em;
+}
+
+#qualifications--list{
+    list-style: none;
+}
+Adding dark mode
+
+We are developers so of course I need to provide a dark mode option. We wont add any toggling or anything like that, just the ability for you to set your preference if you'd like.
+
+For this we will just set some more CSS variables in the same :root only now we will specify -dark at the end, and then duplicate and modify the light mode colors to have a -light extension. In order to set the theme we will simply use the light or dark variables to the variables user throughout the css file.
+
+:root{
+    --mainTextColor-light:#000;
+    --secondaryTextColor-light:rgb(51 51 51);
+    --mainLinkColor-light:#0da2b8;
+    --mainBorderColor-light:rgb(218, 218, 218);
+    --mainBgColor-light:rgb(249, 250,251);
+
+    --mainTextColor-dark:#fff;
+    --secondaryTextColor-dark:#adb0b1;
+    --mainLinkColor-dark:rgb(30, 190,214);
+    --mainBorderColor-dark:#2b3031;
+    --mainBgColor-dark:#131415;
+
+    --mainTextColor:var(--mainTextColor-dark);
+    --secondaryTextColor:var(--secondaryTextColor-dark);
+    --mainLinkColor:var(--mainLinkColor-dark);
+    --mainBorderColor:var(--mainBorderColor-dark);
+    --mainBgColor:var(--mainBgColor-dark);
+
+}
+Tech stack
+
+Just bellow the Skills & qualifications add the following HTML & CSS
+
+<section class="section--page">
+    <h2>Tech stack</h2>
+
+    <div id="wrapper--techstack__items">
+        <div class="card--techstack"><span>Python, JavaScript, NodeJS</span></div>
+        <div class="card--techstack"><span>Django, Express, Flask, FastAPI</span></div>
+        <div class="card--techstack"><span>React, Next JS</span></div>
+        <div class="card--techstack"><span>Postgres, MongoDB, MySQL</span></div>
+    </div>
+</section>
+#qualifications--list{
+    list-style: none;
+}
+
+#wrapper--techstack__items{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    font-size: 0.9em;
+}
+
+.card--techstack{
+    border: 1px solid var(--mainBorderColor);
+    border-radius: 5px;
+    padding: 0.5em 1em;
+    align-items: center;
+}
+Work History
+
+Add the follow section bellow the Tech Stack section.
+
+<section id="work-history-wrapper" class="section--page">
+    <h2>Work History</h2>
+
+    <div class="line-break"></div>
+    <div class="card--work-history">
+        <strong>🚧 DEVELOPER ADVOCATE | AGORA.IO</strong>
+        <p>11/2021 - Present</p>
+        <p>Worked on making Agora’s Web Based SDK more accessible through video tutorials, articles, demo projects and event based training. Also building out React UI components & leading a team to re-design Agora’s documentation and api reference.</p>
+        <ul>
+            <li>Doubled Web SDK’s monthly usage minutes from 15 million to 30 million minutes within my first 4 months</li>
+            <li>Produced educational video content which resulted in 300k+ views on youtube</li>
+            <li>Produced SEO campaigns and content to gain market share for related keywords.</li>
+        </ul>
+    </div>
+
+    <div class="line-break"></div>
+
+    <div class="card--work-history">
+        <strong>🚧 INSTRUCTOR | YOUTUBE, UDEMY, TEACHABLE</strong>
+        <p>11/2019 - Present</p>
+        <p>Produced content showcasing new tech, tutorials & interviews with top developers.</p>
+        <ul>
+            <li>166,000+ Youtube Subscribers</li>
+            <li>30,000 course copies sold</li>
+            <li>12+ Million views on Youtube</li>
+            <li>Made regular contributions to Traversy Medias youtube channel (1.9m Subscribers)</li>
+            <li>Tutorial videos included projects such as social networks, Ecommerce, real time video, stripe & paypal integrations and more </li>
+        </ul>
+    </div>
+
+    <div class="line-break"></div>
+
+    <div class="card--work-history">
+        <strong>🚧 SENIOR DEVELOPER | FOI LABS</strong>
+        <p>10/2017 - 10/2019</p>
+        <p>Designed and developed a laboratory management system. My system
+            provided an interface for lab technicians and customers to view and
+            track data from samples tested in the lab.</p>
+        <ul>
+            <li>Designed prototype & pitched original idea for new lab management system (LIMS)</li>
+            <li>Built entire code base and brought version 1 of LIMS system to market as a solo developer</li>
+            <li>Onboarded and trained customers (Webinars & Conferences)</li>
+            <li>Managed a small team of developers in expansion of LIMS system</li>
+        </ul>
+    </div>
+
+    <div class="line-break"></div>
+
+    <div class="card--work-history">
+        <strong>🚧 DIGITAL MARKETER | UNIFIVE DIGITAL</strong>
+        <p>2014 - 2017</p>
+        <p>Started a digital agency building websites and marketing for
+            local businesses. Mostly Wordpress sites with small modifications to
+            themes.</p>
+        <ul>
+            <li>Organized SEO & SEM campaigns on a local and global scale.</li>
+            <li>Saved a customer $110k a year by reducing Adwords CPC cost with optimization</li>
+            <li>70 + websites built with my small team of developers and freelancers</li>
+        </ul>
+    </div>
+</section>
+.card--work-history{
+    border-left: 1px solid var(--mainBorderColor);
+    margin-top: 3em;
+    margin-bottom: 3em;
+    padding-left: 2em;
+}
+
+.line-break{
+    background-color: var(--mainBorderColor);
+    height: 1px;
+}
+Projects & Accomplishments
+
+Add the follow code bellow the Work History section
+
+<section class="section--page">
+    <h2>Projects & Accomplishments</h2>
+
+    <div class="card--project">
+        <a href="project1.html"><span>🏆 </span>Built a Laboratory management system for forensics lab</a>
+    </div>
+
+    <div class="card--project">
+        <a href="project1.html" ><span>🏆 </span>Documentation website - Lead team to re-build docs for agora.io</a>
+    </div>
+
+    <div class="card--project">
+        <a href="project1.html" ><span>🏆 </span>Ecommerce platform using paypal and stripe API for payment integration</a>
+    </div>
+
+    <div class="card--project">
+        <a href="project1.html"><span>🏆 </span>Social Network - open source project</a>
+    </div>
+
+</section>
+.card--project{
+    padding-top: 1em;
+    padding-bottom: 1em;
+    border-top: 1px solid var(--mainBorderColor);
+}
+
+.card--project a{
+    color: var(--mainTextColor);
+
+    transition: 0.3s;
+}
+
+.card--project a:hover{
+    color: rgb(30, 190,214);
+
+}
+Project page
+
+It's best practice to say a few things about every project you have worked on. For this we will create a template and fill in some dummy text for each project. I'll add one template and let you modify as you need.
+
+In the same directory as your index.html file create a project1.html file and add the following code. If followed my code exactly in the last step you should already be linked to this page.
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Dennis Ivy</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="./styles/main.css">
+    </head>
+    <body>
+        <div id="container--main">
+            <a href="index.html">&#x2190; Go Back</a>
+            <h1>Built a Laboratory management system for forensics lab</h1>
+
+            <ul>
+                <li><a href="#">Live Demo</a></li>
+                <li><a href="#">Source code</a></li>
+            </ul>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</p>
+
+            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look</p>
+
+            <ul>
+                <li>Contrary to popular belief, Lorem Ipsum is not simply random text</li>
+                <li>making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia</li>
+                <li>45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem"</li>
+            </ul>
+        </div>
+    </body>
+</html>
+Making it responsive
+It's 2022 your site better be responsive.
+
+Add this to the bottom of your CSS file
+
+@media(max-width:600px){
+
+    .section--page{
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+
+    #wrapper--hero{
+        gap: 1em;
+        flex-direction: column;
+    }
+
+    #profile-pic{
+        width: 200px;
+        height: 200px;
+    }
+
+
+    .card--work-history{
+        border-left: none;
+        padding-left: 0;
+    }
+}
+Hosting with Github pages
+I told you I was gonna make this part as simple as possible. So we wont use any external services outside of github, a platform every developer should be familiar with.
+
+If your not familiar with Git & GitHub I'd recommend checking out this video I made on Uploading Files To GitHub
+
+Github pages
+
+Once your files on pushed to your Github repo you can use github pages to host your static website, this process is easy.
+
+Note: If you want to host for free you will need to make your repo a public repo
+
+In your GitHub account go to select your repo and then click settings --> pages and then select the brank you want to deploy and click save.
+
+This could take a minute so give it some time before you refresh.
+
+Just to be safe, make sure your home page is called index.html to avoid conflicts.
+
+You should now be able to see your domain user Custom Domain. Mine looks like this divanov11.github.io/Digital-Resume
+
+Github pages
+
+Discussion (0)
+Subscribe
+pic
+
+Code of Conduct • Report abuse
+Read next
+dailydevtips1 profile image
+Browser extensions - our first extension
+Chris Bongers - Aug 11
+matteobruni profile image
+tsParticles 2.2.0 Released
+Matteo Bruni - Aug 11
+shameerchagani profile image
+How To Create Help Section for Your Website Using HTML & CSS
+Shameer Chagani - Aug 11
+combarnea profile image
+How to raise funds for an open-source company 💵
+Tomer Barnea - Aug 10
+
+Dennis Ivy
+Follow
+YouTuber, contributor at @traversymedia, software developer at @agoraio and online instructor.
+JOINED
+May 23, 2022
+Trending on DEV Community  
+Thomas Hansen profile image
+Angular is almost always better than React
+#discuss #react #angular
+Dennis Persson profile image
+What If Animals Could Code...
+#jokes #discuss #webdev #programming
+Carlos Padilla profile image
+Customize Medusa and Gatsby to Implement Wishlist Functionality
+#opensource #javascript #webdev #programming
+@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600;700&display=swap');
+
+:root{
+    --mainTextColor:#000;
+    --secondaryTextColor:(51 51 51);
+    --mainLinkColor:#0da2b8;
+    --mainBorderColor:rgb(218, 218, 218);
+    --mainBgColor:rgb(249, 250,251);
+}
+
+*{
+    font-family: 'Readex Pro';
+    line-height: 1.5em;
+    box-sizing: border-box;
+    color: var(--mainTextColor);
+
+}
+
+body{
+    background-color: var(--mainBgColor);            
+}
+
+p, span, li{
+    color: var(--secondaryTextColor);
+    font-size: 1em;
+}
+
+a{
+    text-decoration: none;
+    color: var(--mainLinkColor);
+    font-weight: 500;
+}
+
+li{
+    line-height: 1.9em;
+}
+
+#container--main{
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 1em;
+}
+
+.section--page{
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+#wrapper--hero{
+    display: flex;
+    align-items: center;
+    gap: 4em;
+}
+
+#bio, a{
+    font-weight: 300;
+}
+
+#user-name{
+    font-size: 48px;
+    line-height: 1em;
+}
+
+#profile-pic{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#email{
+    color: var(--mainTextColor);
+}
+
+#socials--list{
+    display: flex;
+    justify-content: space-between;
+    column-gap: 1em;
+    flex-wrap: wrap;
+}
+
+#socials--list a{
+    font-weight: 300;
+    color: var(--secondaryTextColor);
+    font-size: 0.9em;
+    transition: 0.3s;
+}
+
+#socials--list a:hover{
+    font-weight: 100;
+    color: var(--mainLinkColor);
+    font-size: 0.9em;
+}
+
+#qualifications--list{
+    list-style: none;
+}
+DEV Community — A constructive and inclusive social network for software developers. With you every step of your journey.
+Built on Forem — the open source software that powers DEV and other inclusive communities.
+Made with love and Ruby on Rails. DEV Community © 2016 - 2022.
